@@ -21,7 +21,7 @@
             <td th:utext="${'38 ' + contact.phone}">...</td>
             <td>
                 <a th:href="@{editContact/{id}(id=${contact.id})}">Edit</a>
-                <a th:href="@{deleteContact/{id}(id=${contact.id})}">delete</a>
+                <a th:href="@{/contacts/delete/{id}(id=${contact.id})}">delete</a>
             </td>
         </tr>
     </table>

@@ -48,4 +48,9 @@ public class ContactService {
         System.out.println(newContact);
         contactRepository.saveAndFlush(newContact);
     }
+
+    public void deleteContact(Integer id) {
+//        Contact contact = this.getContactByID(id).get();
+        contactRepository.deleteById(id);
+    }
 }
