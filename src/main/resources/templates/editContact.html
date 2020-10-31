@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit contact</title>
+</head>
+<body>
+<form method="POST"
+      th:action="@{/editContact}"
+      th:object="${contact}" >
+    First Name:
+    <br/>
+    Last Name:
+    <input type="text" th:value="@{name}" th:field="*{name}" />
+    Phone:
+    <input type="text" th:value="@{phone}" th:field="*{phone}" />
+    <br/>
+    <input type="date" th:value="@{dateOfBirth}" th:field="*{dateOfBirth}" name="dateOfBirth" id="dateOfBirth">
+    <input type="submit" value="Save" />
+</form>
+</body>
+</html>

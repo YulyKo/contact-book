@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Person List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Person List</h1>
+<a href="addContact">Add Person</a>
+<br/><br/>
+<div>
+    <table border="1" style="width: 79vw;">
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each ="contact : ${contacts}">
+            <td th:utext="${contact.name}">... </td>
+            <td th:utext="${'38 ' + contact.phone}">...</td>
+            <td>
+                <a th:href="@{editContact/{id}(id=${contact.id})}">Edit</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
