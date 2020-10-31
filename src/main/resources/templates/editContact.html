@@ -6,8 +6,9 @@
 </head>
 <body>
 <form method="POST"
-      th:action="@{/editContact}"
+      th:action="@{/saveEditContact/{id}(id=${id})}"
       th:object="${contact}" >
+    <p th:utext="${id}">...</p>
     First Name:
     <br/>
     Last Name:

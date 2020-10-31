@@ -36,8 +36,7 @@ public class ContactService {
         return contactRepository.findById(id);
     }
 
-    public void updateContact(Contact contact) {
-        Integer id = contact.getId();
+    public void updateContact(Contact contact, Integer id) {
         String name = contact.getName();
         Date dateOfBirth = contact.getDateOfBirth();
         String phone = contact.getPhone();
@@ -47,6 +46,6 @@ public class ContactService {
         newContact.setDateOfBirth(dateOfBirth);
         newContact.setName(name);
         System.out.println(newContact);
-        contactRepository.save(newContact);
+        contactRepository.saveAndFlush(newContact);
     }
 }
