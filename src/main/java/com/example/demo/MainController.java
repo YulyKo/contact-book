@@ -67,7 +67,6 @@ public class MainController {
         String phone = contact.getPhone();
 //        Date dateOfBirth = contact.getDateOfBirth();
 //        Integer id = contact.getId();
-
         if (name != null && name.length() > 0 && phone.length() >= 10) {
             contactService.updateContact(contact);
             return "redirect:/contacts";

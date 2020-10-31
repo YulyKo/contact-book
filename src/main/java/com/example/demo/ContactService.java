@@ -37,7 +37,16 @@ public class ContactService {
     }
 
     public void updateContact(Contact contact) {
+        Integer id = contact.getId();
+        String name = contact.getName();
+        Date dateOfBirth = contact.getDateOfBirth();
+        String phone = contact.getPhone();
         System.out.println(contact);
-        contactRepository.save(contact);
+        Contact newContact = contactRepository.findById(id).get();
+        newContact.setPhone(phone);
+        newContact.setDateOfBirth(dateOfBirth);
+        newContact.setName(name);
+        System.out.println(newContact);
+        contactRepository.save(newContact);
     }
 }
