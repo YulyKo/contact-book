@@ -79,4 +79,10 @@ public class MainController {
         return "/editContact/{id}";
     }
 
+    @RequestMapping( value = { "/deleteContact/{id}" }, method = RequestMethod.DELETE)
+    public String deleteContact(Model model,
+                                @PathVariable("id") Integer id) {
+        return "contacts";
+    }
+
 }
