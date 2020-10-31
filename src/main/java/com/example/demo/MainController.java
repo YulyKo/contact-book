@@ -60,16 +60,15 @@ public class MainController {
         return "/editContact";
     }
 
-    @RequestMapping( value = { "/editContact" }, method = RequestMethod.POST)
+    @RequestMapping( value = { "/saveEditContact/{id}" }, method = RequestMethod.POST)
     public String editContact(Model model,
-                              @ModelAttribute("contact") Contact contact) {
+                              @ModelAttribute("contact") Contact contact,
+                              @PathVariable("id") Integer id) {
         String name = contact.getName();
         String phone = contact.getPhone();
 //        Date dateOfBirth = contact.getDateOfBirth();
-//        Integer id = contact.getId();
-
         if (name != null && name.length() > 0 && phone.length() >= 10) {
-            contactService.updateContact(contact);
+            contactService.updateContact(contact, id);
             return "redirect:/contacts";
         }
 //        else {
