@@ -14,11 +14,13 @@
         <tr>
             <th>Name</th>
             <th>Phone</th>
+            <th>Date of Birth</th>
             <th>Actions</th>
         </tr>
         <tr th:each ="contact : ${contacts}">
             <td th:utext="${contact.name}">... </td>
             <td th:utext="${'38 ' + contact.phone}">...</td>
+            <td th:utext="${'38 ' + contact.dateOfBirth}">...</td>
             <td>
                 <a th:href="@{editContact/{id}(id=${contact.id})}">Edit</a>
                 <a th:href="@{/contacts/delete/{id}(id=${contact.id})}">delete</a>
