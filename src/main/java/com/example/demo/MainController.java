@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,11 +35,13 @@ public class MainController {
 
         String name = contact.getName();
         String phone = contact.getPhone();
+        Date dateOfBirth = contact.getDateOfBirth();
 // 38 093 183 12 12
         if (name != null && name.length() > 0 && phone.length() >= 10) {
             Contact newContact = new Contact();
             newContact.setPhone(phone);
             newContact.setName(name);
+            newContact.setDateOfBirth(dateOfBirth);
             contactService.postContact(newContact);
 
             return "redirect:/contacts";
