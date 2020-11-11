@@ -2,24 +2,45 @@ package com.example.demo;
 
 import com.example.demo.domain.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:8080")
+@RestController
 public class MainController {
-    @Autowired
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*"); // this allows all origin
+        config.addAllowedHeader("*"); // this allows all headers
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("HEAD");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("PATCH");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
+        @Autowired
     private ContactService contactService;
 
-    @RequestMapping(value = { "/contacts" }, method = RequestMethod.GET)
-    public String personList(Model model) {
-        List<Contact> contacts = contactService.getContacts();
-        model.addAttribute("contacts", contacts);
-        return "contactList";
+    @GetMapping("/contacts")
+    public List<Contact> personList() {
+        return contactService.getContacts();
     }
 
     @RequestMapping(value = { "/addContact" }, method = RequestMethod.GET)
