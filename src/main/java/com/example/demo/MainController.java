@@ -1,8 +1,12 @@
 package com.example.demo;
 
 import com.example.demo.domain.Contact;
+import com.example.demo.domain.ContactCreateRequest;
+import com.example.demo.domain.ContactCreateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,46 +20,27 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping("/contacts")
 public class MainController {
 
     @Autowired
     private ContactService contactService;
 
-    @GetMapping("/contacts")
+    @GetMapping()
     public List<Contact> personList() {
         return contactService.getContacts();
     }
 
-    @RequestMapping(value = { "/addContact" }, method = RequestMethod.GET)
-    public String showAddPersonPage(Model model) {
-        Contact contact = new Contact();
-        model.addAttribute("contact", contact);
-        return "addContact";
-    }
-
-    @RequestMapping(value = { "/addContact" }, method = RequestMethod.POST)
-    public String savePerson(Model model,
-                             @ModelAttribute("contact") Contact contact) {
-
-        String name = contact.getName();
-        String phone = contact.getPhone();
-        Date dateOfBirth = contact.getDateOfBirth();
-// 38 093 183 12 12
-        if (name != null && name.length() > 0 && phone.length() >= 10) {
-            Contact newContact = new Contact();
-            newContact.setPhone(phone);
-            newContact.setName(name);
-            newContact.setDateOfBirth(dateOfBirth);
-            contactService.postContact(newContact);
-
-            return "redirect:/contacts";
-        }
-//        else {
-//            String errorMessage = "Something wrong";
-//            model.addAttribute("errorMessage", errorMessage);
-//        }
-
-        return "addContact";
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseStatus(HttpStatus.CREATED)
+    ContactCreateResponse add(@RequestBody() ContactCreateRequest contact) {
+        ContactCreateResponse response = new ContactCreateResponse(contact.getName(), contact.getPhone(), contact.getDateOfBirth());
+        Contact newContact = new Contact();
+        newContact.setName(contact.getName());
+        newContact.setPhone(contact.getPhone());
+        newContact.setDateOfBirth(contact.getDateOfBirth());
+        contactService.postContact(newContact);
+        return response;
     }
 
     @RequestMapping( value = { "/editContact/{id}" }, method = RequestMethod.GET)
