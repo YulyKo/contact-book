@@ -32,8 +32,8 @@ public class ContactService {
         return contactRepository.findAll();
     }
 
-    public Optional<Contact> getContactByID(Integer id) {
-        return contactRepository.findById(id);
+    public Contact getContactByID(Integer id) {
+        return contactRepository.findById(id).get();
     }
 
     public void updateContact(Contact contact, Integer id) {

@@ -4,17 +4,11 @@ import com.example.demo.domain.Contact;
 import com.example.demo.domain.ContactCreateRequest;
 import com.example.demo.domain.ContactCreateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,13 +37,10 @@ public class MainController {
         return response;
     }
 
-    @RequestMapping( value = { "/editContact/{id}" }, method = RequestMethod.GET)
-    public String editContact(Model model, @PathVariable("id") Integer id) {
-        Optional<Contact> contact = contactService.getContactByID(id);
-        model.addAttribute("contact", contact);
-//        Contacts newContact = new Contacts();
-//        newContact.setId(contact.get().getId());
-        return "/editContact";
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseStatus(HttpStatus.CREATED)
+    Contact editContact(@RequestBody() Integer id) {
+        return contactService.getContactByID(id);
     }
 
     @RequestMapping( value = { "/saveEditContact/{id}" }, method = RequestMethod.POST)
