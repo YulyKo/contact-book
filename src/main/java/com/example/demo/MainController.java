@@ -47,12 +47,10 @@ public class MainController {
         contactService.updateContact(contact, id);
     }
 
-    @RequestMapping( value = { "/contacts/delete/{id}" }, method = { RequestMethod.DELETE, RequestMethod.GET})
-    public String deleteContact(Model model,
+    @DeleteMapping("/{id}")
+    public void deleteContact(Model model,
                                 @PathVariable("id") Integer id) {
-//        Contact contact = contactService.getContactByID(id).get();
         contactService.deleteContact(id);
-        return "redirect:/contacts";
     }
 
 }
