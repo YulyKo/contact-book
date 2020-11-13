@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -37,29 +36,15 @@ public class MainController {
         return response;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseStatus(HttpStatus.CREATED)
-    Contact editContact(@RequestBody() Integer id) {
-        return contactService.getContactByID(id);
-    }
+//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseStatus()
+//    Contact getById(@RequestBody() Integer id) {
+//        return contactService.getContactByID(id);
+//    }
 
-    @RequestMapping( value = { "/saveEditContact/{id}" }, method = RequestMethod.POST)
-    public String editContact(Model model,
-                              @ModelAttribute("contact") Contact contact,
-                              @PathVariable("id") Integer id) {
-        String name = contact.getName();
-        String phone = contact.getPhone();
-//        Date dateOfBirth = contact.getDateOfBirth();
-        if (name != null && name.length() > 0 && phone.length() >= 10) {
-            contactService.updateContact(contact, id);
-            return "redirect:/contacts";
-        }
-//        else {
-//            String errorMessage = "Something wrong";
-//            model.addAttribute("errorMessage", errorMessage);
-//        }
-
-        return "/editContact/{id}";
+    @PutMapping("/{id}")
+    public void editContact(@RequestBody() Contact contact, @PathVariable Integer id) {
+        contactService.updateContact(contact, id);
     }
 
     @RequestMapping( value = { "/contacts/delete/{id}" }, method = { RequestMethod.DELETE, RequestMethod.GET})
